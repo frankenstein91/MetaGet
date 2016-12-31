@@ -4,6 +4,7 @@ import _hashlib
 import django
 from _datetime import datetime
 
+
 # Create your models here.
 class WebSite(models.Model):
     Url = models.URLField(blank=False, null=False)
@@ -12,7 +13,8 @@ class WebSite(models.Model):
     MD5Sum = models.CharField(max_length=32,null=True, blank=True)
     encoding = models.CharField(max_length=15,null=True, blank=True)
     ContentType = models.CharField(max_length=15,null=True, blank=True)
-    
+    Cookies = models.TextField(null=True, blank=True)
+        
     
     def scan(self):
         site = requests.get(self.Url)
@@ -21,6 +23,7 @@ class WebSite(models.Model):
         self.Scanned=True
         self.encoding = site.encoding
         self.ContentType = site.headers["Content-Type"]
+        self.Cookies = site.cookies
         self.save()
         
         
