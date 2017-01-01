@@ -16,7 +16,10 @@ class WebSiteAdmin(admin.ModelAdmin):
     # enable the save buttons on top on change form
     save_on_top = True
     actions = [scan_WebSite]
+
+class ImageAdmin(admin.ModelAdmin):
+    list_filter = ['HasEXIF', 'CamModel']
     
 admin.site.register(WebSite, WebSiteAdmin)
-admin.site.register(Image)
+admin.site.register(Image, ImageAdmin)
 
