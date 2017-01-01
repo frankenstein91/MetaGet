@@ -20,6 +20,7 @@ class WebSiteAdmin(admin.ModelAdmin):
 class ImageAdmin(admin.ModelAdmin):
     list_filter = ['HasEXIF', 'CamModel']
     
+    
 admin.site.register(WebSite, WebSiteAdmin)
 admin.site.register(Image, ImageAdmin)
 

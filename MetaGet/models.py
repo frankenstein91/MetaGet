@@ -25,6 +25,7 @@ class WebSite(models.Model):
         self.encoding = site.encoding
         self.ContentType = site.headers["Content-Type"]
         if self.ContentType == "image/jpeg":
+            self.Image_set.all().delete()
             ImageTemp = Image(Url=self, Bild = site.content, MD5sum = self.MD5Sum)
             ImageTemp.save()
             ImageTemp.Scan()
