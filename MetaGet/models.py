@@ -61,9 +61,9 @@ class Image(models.Model):
                 if k in PIL.ExifTags.TAGS
                 }
         self.CamModel = exif["Model"]
-        DateTimeDigitized = exif["DateTimeDigitized"]
-        ExifImageHeight = int(exif["ExifImageHeight"])
-        ExifImageWidth = int(exif["ExifImageWidth"])
+        self.DateTimeDigitized = exif["DateTimeDigitized"]
+        self.ExifImageHeight = int(exif["ExifImageHeight"])
+        self.ExifImageWidth = int(exif["ExifImageWidth"])
     
         self.save()
         BildFile.close()
