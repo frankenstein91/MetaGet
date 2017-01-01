@@ -62,8 +62,8 @@ class Image(models.Model):
                 }
         self.CamModel = exif["Model"]
         DateTimeDigitized = exif["DateTimeDigitized"]
-        ExifImageHeight = exif["ExifImageHeight"]
-        ExifImageWidth = exif["ExifImageWidth"]
+        ExifImageHeight = int(exif["ExifImageHeight"])
+        ExifImageWidth = int(exif["ExifImageWidth"])
     
         self.save()
         BildFile.close()
