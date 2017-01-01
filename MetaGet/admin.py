@@ -19,7 +19,8 @@ class WebSiteAdmin(admin.ModelAdmin):
     actions = [scan_WebSite]
 
 class ImageAdmin(admin.ModelAdmin):
-    list_filter = ['HasEXIF', 'CamModel']
+    list_filter = ['HasEXIF', 'DateTimeDigitized', 'CamModel']
+    search_fields = ['Url', 'MD5Sum']
     readonly_fields = ('Url', 'Bild', 'HasEXIF', 'CamModel', 'DateTimeDigitized', 'MD5sum', 'ExifImageHeight', 'ExifImageWidth')
     
     
