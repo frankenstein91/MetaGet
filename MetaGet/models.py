@@ -25,7 +25,7 @@ class WebSite(models.Model):
         self.encoding = site.encoding
         self.ContentType = site.headers["Content-Type"]
         if self.ContentType == "image/jpeg":
-            ImageTemp = Image(Url=self, Bild = site.content)
+            ImageTemp = Image(Url=self, Bild = site.content, MD5sum = self.MD5Sum)
             ImageTemp.save()
             ImageTemp.Scan()
         self.Cookies = site.cookies
@@ -41,6 +41,7 @@ class Image(models.Model):
     Bild = models.BinaryField(blank=True, null=True)
     HasEXIF = models.BooleanField(default=False)
     CamModel = models.CharField(max_length=64, blank=True, null=True)
+    MD5sum = models.CharField(max_length=32)
     def Scan(self):
         BildFile = tempfile.NamedTemporaryFile("w+b", suffix="Bild")
         BildFile.write(self.Bild)
@@ -58,5 +59,5 @@ class Image(models.Model):
         self.save()
         BildFile.close()
     def __str__(self):
-        return "Image - "
+        return "Image - " + self.MD5sum
     
