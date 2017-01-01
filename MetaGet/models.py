@@ -61,7 +61,7 @@ class Image(models.Model):
                 if k in PIL.ExifTags.TAGS
                 }
         self.CamModel = exif["Model"]
-        self.DateTimeDigitized = exif["DateTimeDigitized"]
+        self.DateTimeDigitized = exif["DateTimeDigitized"].replace(":", "-", 2)
         self.ExifImageHeight = int(exif["ExifImageHeight"])
         self.ExifImageWidth = int(exif["ExifImageWidth"])
     
