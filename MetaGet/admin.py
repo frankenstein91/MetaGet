@@ -1,15 +1,16 @@
 from django.contrib import admin
 
 # Register your models here.
-from MetaGet.models import WebSite
+from MetaGet.models import WebSite, Image
+
 
 def scan_WebSite(modeladmin, request, queryset):
     for obj in queryset:
         obj.scan()
 
 class WebSiteAdmin(admin.ModelAdmin):
-    list_display = ['Url', 'LastScan']
-    list_filter = ['LastScan', 'Scanned']
+    list_display = ['Url', 'LastScan', 'ContentType']
+    list_filter = ['LastScan', 'Scanned', 'ContentType']
     # fields to search in change list
     search_fields = ['Url', 'MD5Sum']
     # enable the save buttons on top on change form
@@ -17,3 +18,5 @@ class WebSiteAdmin(admin.ModelAdmin):
     actions = [scan_WebSite]
     
 admin.site.register(WebSite, WebSiteAdmin)
+admin.site.register(Image)
+

@@ -3,7 +3,8 @@ import requests, hashlib
 import _hashlib
 import django
 from _datetime import datetime
-
+from PIL import Image as ImageLib
+import PIL.ExifTags, tempfile
 
 # Create your models here.
 class WebSite(models.Model):
@@ -23,8 +24,28 @@ class WebSite(models.Model):
         self.Scanned=True
         self.encoding = site.encoding
         self.ContentType = site.headers["Content-Type"]
+        if self.ContentType == "image/jpeg":
+            ImageTemp = Image(Url=self, Bild = site.content)
+            ImageTemp.save()
+            ImageTemp.Scan()
         self.Cookies = site.cookies
+        self.save()
+
+
+class Image(models.Model):
+    Url = models.ForeignKey(WebSite, on_delete=models.CASCADE)
+    Bild = models.BinaryField(blank=True, null=True)
+    HasEXIF = models.BooleanField(default=False)
+    def Scan(self):
+        BildFile = tempfile.NamedTemporaryFile("w+b", suffix="Bild")
+        BildFile.write(self.Bild)
+        Bild = ImageLib.open(BildFile)
+        if Bild._getexif() == None:
+            self.HasEXIF = False
+        else:
+            self.HasEXIF = True
+        print(Bild._getexif())
         self.save()
         
         
-        
+    
