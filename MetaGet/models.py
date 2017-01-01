@@ -5,11 +5,12 @@ import django
 from _datetime import datetime
 from PIL import Image as ImageLib
 import PIL.ExifTags, tempfile
+from email.policy import default
 
 # Create your models here.
 class WebSite(models.Model):
     Url = models.URLField(blank=False, null=False)
-    Scanned = models.BooleanField(null=False)
+    Scanned = models.BooleanField(default=False)
     LastScan = models.DateTimeField(null=True, blank=True)
     MD5Sum = models.CharField(max_length=32,null=True, blank=True)
     encoding = models.CharField(max_length=15,null=True, blank=True)
