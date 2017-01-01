@@ -44,6 +44,9 @@ class Image(models.Model):
     CamModel = models.CharField(max_length=64, blank=True, null=True)
     DateTimeDigitized = models.DateTimeField(blank=True, null=True)
     MD5sum = models.CharField(max_length=32)
+    ExifImageHeight = models.IntegerField(null=True, blank=True)
+    ExifImageWidth = models.IntegerField(null=True, blank=True)
+    
     def Scan(self):
         BildFile = tempfile.NamedTemporaryFile("w+b", suffix="Bild")
         BildFile.write(self.Bild)
@@ -58,6 +61,9 @@ class Image(models.Model):
                 }
         self.CamModel = exif["Model"]
         DateTimeDigitized = exif["DateTimeDigitized"]
+        ExifImageHeight = exif["ExifImageHeight"]
+        ExifImageWidth = exif["ExifImageWidth"]
+    
         self.save()
         BildFile.close()
     def __str__(self):
