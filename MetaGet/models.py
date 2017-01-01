@@ -41,6 +41,7 @@ class Image(models.Model):
     Bild = models.BinaryField(blank=True, null=True)
     HasEXIF = models.BooleanField(default=False)
     CamModel = models.CharField(max_length=64, blank=True, null=True)
+    DateTimeDigitized = models.DateTimeField(blank=True, null=True)
     MD5sum = models.CharField(max_length=32)
     def Scan(self):
         BildFile = tempfile.NamedTemporaryFile("w+b", suffix="Bild")
@@ -55,7 +56,7 @@ class Image(models.Model):
                 if k in PIL.ExifTags.TAGS
                 }
         self.CamModel = exif["Model"]
-        print(exif)
+        DateTimeDigitized = exif["DateTimeDigitized"]
         self.save()
         BildFile.close()
     def __str__(self):
