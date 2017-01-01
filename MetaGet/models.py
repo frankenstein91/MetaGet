@@ -30,12 +30,17 @@ class WebSite(models.Model):
             ImageTemp.Scan()
         self.Cookies = site.cookies
         self.save()
+    
+    def __str__(self):
+        return self.Url
+        
 
 
 class Image(models.Model):
     Url = models.ForeignKey(WebSite, on_delete=models.CASCADE)
     Bild = models.BinaryField(blank=True, null=True)
     HasEXIF = models.BooleanField(default=False)
+    CamModel = models.CharField(max_length=64, blank=True, null=True)
     def Scan(self):
         BildFile = tempfile.NamedTemporaryFile("w+b", suffix="Bild")
         BildFile.write(self.Bild)
@@ -44,8 +49,14 @@ class Image(models.Model):
             self.HasEXIF = False
         else:
             self.HasEXIF = True
-        print(Bild._getexif())
+        exif = {PIL.ExifTags.TAGS[k]: v
+                for k, v in Bild._getexif().items()
+                if k in PIL.ExifTags.TAGS
+                }
+        self.CamModel = exif["Model"]
+        print(exif)
         self.save()
-        
-        
+        BildFile.close()
+    def __str__(self):
+        return "Image - "
     
